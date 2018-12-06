@@ -1,39 +1,59 @@
-package problem0002
+use std::collections::LinkedList;
+use std::cmp;
 
-import (
-	"github.com/aQuaYi/LeetCode-in-Go/kit"
-)
+pub fn add_two_numbers (list1: LinkedList<u32>, list2: LinkedList<u32>) -> LinkedList<u32> {
+    let mut results: LinkedList<u32> = LinkedList::new();
 
-// ListNode defines for singly-linked list.
-//  type ListNode struct {
-//      Val int
-//      Next *ListNode
-//  }
-type ListNode = kit.ListNode
+    let length = cmp::max(list1.len(), list2.len()) + 1;
+    let mut iter1 = list1.iter();
+    let mut iter2 = list2.iter();
 
-func addTwoNumbers(l1 *ListNode, l2 *ListNode) *ListNode {
-	resPre := &ListNode{}
-	cur := resPre
-	carry := 0
+    let mut overflow_value: u32 = 0;
 
-	for l1 != nil || l2 != nil || carry > 0 {
-		sum := carry
+    for _i in 0..length {
+        let i1 = iter1.next();
+        let i2 = iter2.next();
+        
+        let mut v1 = 0;
+        let mut v2 = 0;
 
-		if l1 != nil {
-			sum += l1.Val
-			l1 = l1.Next
-		}
+        if i1.is_some() {
+            v1 = *i1.unwrap();
+        }
+        if i2.is_some() {
+            v2 = *i2.unwrap();
+        }
 
-		if l2 != nil {
-			sum += l2.Val
-			l2 = l2.Next
-		}
+        let mut v = v1 + v2 + overflow_value;
 
-		carry = sum / 10
+        overflow_value = v / 10;
 
-		cur.Next = &ListNode{Val: sum % 10}
-		cur = cur.Next
-	}
+        v = v % 10;
 
-	return resPre.Next
+        results.push_back(v);
+    }
+
+    let last_value = results.pop_back();
+    if last_value.is_some() && last_value.unwrap() != 0 {
+        results.push_back(last_value.unwrap());
+    }
+
+    return results;
+}
+
+fn main() {
+    let mut list1: LinkedList<u32> = LinkedList::new();
+    let mut list2: LinkedList<u32> = LinkedList::new();
+
+    list1.push_back(9);
+    list1.push_back(4);
+    list1.push_back(5);
+
+    list2.push_back(3);
+    list2.push_back(4);
+    list2.push_back(5);
+    list2.push_back(5);
+
+    let results = add_two_numbers(list1, list2);
+    println!("{:?}", results);
 }
