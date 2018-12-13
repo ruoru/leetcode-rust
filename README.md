@@ -16,3 +16,4 @@ leetcode in rust lang.
 |1|[Two Sum](./Algorithms/0001.two-sum)|39%|Easy||
 |2|[Add Two Numbers](./Algorithms/0002.add-two-numbers)|29%|Medium||
 |3|[Longest Substring Without Repeating Characters](./Algorithms/0003.longest-substring-without-repeating-characters)|25%|Medium||
+|4|[Median of Two Sorted Arrays](./Algorithms/0004.median-of-two-sorted-arrays)|24%|Hard||

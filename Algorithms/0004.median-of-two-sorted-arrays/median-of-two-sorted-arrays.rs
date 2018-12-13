@@ -1,43 +1,64 @@
-package problem0004
+use std::cmp;
+use std::mem;
 
-func findMedianSortedArrays(nums1 []int, nums2 []int) float64 {
-	nums := combine(nums1, nums2)
-	return medianOf(nums)
+pub fn median_of_two_sorted_arrays (v1: Vec<i32>, v2: Vec<i32>) -> f32 {
+
+    let mut vec1 = v1;
+    let mut vec2 = v2;
+
+    if vec1.len() > vec2.len() {
+        mem::swap(&mut vec1, &mut vec2);
+    }
+
+    let len1 = vec1.len();
+    let len2 = vec2.len();
+
+    let half_len = (len1 + len2 + 1) / 2;
+    let mut index_min = 0;
+    let mut index_max = len1;
+
+    while index_min <= index_max {
+        let i = (index_min + index_max) / 2;
+        let j = half_len - i;
+
+        if i < len1 && vec1[i] < vec2[j - 1] {
+            index_min = i + 1;
+        } else if i > 0 && vec1[i-1] > vec2[j] {
+            index_max = i - 1;
+        } else {
+            let left_max;
+            let right_min;
+            if i == 0 {
+                left_max = vec2[j - 1];
+            } else if j == 0 {
+                left_max = vec1[i-1];
+            } else {
+                left_max = cmp::max(vec1[i-1], vec2[j-1]);
+            }
+
+            if (len1 + len2) % 2 == 1 {
+                return left_max as f32;
+            }
+
+            if i == len1 {
+                right_min = vec2[j];
+            } else if j == len2 {
+                right_min = vec1[i];
+            } else {
+                right_min = cmp::min(vec1[i], vec2[j]);
+            }
+
+            return (left_max + right_min) as f32 / 2.0
+        }
+    }
+
+    return 0.0;
 }
 
-func combine(mis, njs []int) []int {
-	lenMis, i := len(mis), 0
-	lenNjs, j := len(njs), 0
-	res := make([]int, lenMis+lenNjs)
+fn main() {
+    let vec1 = vec![9, 13, 17, 19];
+	let vec2 = vec![2, 7, 9, 14, 15, 24, 28, 38];
 
-	for k := 0; k < lenMis+lenNjs; k++ {
-		if i == lenMis ||
-			(i < lenMis && j < lenNjs && mis[i] > njs[j]) {
-			res[k] = njs[j]
-			j++
-			continue
-		}
-
-		if j == lenNjs ||
-			(i < lenMis && j < lenNjs && mis[i] <= njs[j]) {
-			res[k] = mis[i]
-			i++
-		}
-	}
-
-	return res
-}
-
-func medianOf(nums []int) float64 {
-	l := len(nums)
-
-	if l == 0 {
-		panic("切片的长度为0，无法求解中位数。")
-	}
-
-	if l%2 == 0 {
-		return float64(nums[l/2]+nums[l/2-1]) / 2.0
-	}
-
-	return float64(nums[l/2])
+    let results = median_of_two_sorted_arrays(vec1, vec2);
+    println!("{}", results);
 }
