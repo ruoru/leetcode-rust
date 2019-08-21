@@ -1,4 +1,5 @@
 mod add_two_numbers;
+mod ListNode;
 use add_two_numbers::Solution;
 
 fn main() {
@@ -14,6 +15,6 @@ fn main() {
     list2.push_back(5);
     list2.push_back(5);
 
-    let results = add_two_numbers(list1, list2);
+    let results = Solution.add_two_numbers(list1, list2);
     println!("{:?}", results);
 }
