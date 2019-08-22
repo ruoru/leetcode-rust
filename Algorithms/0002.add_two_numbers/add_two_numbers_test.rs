@@ -1,20 +1,29 @@
 mod add_two_numbers;
-mod ListNode;
+mod list_node;
 use add_two_numbers::Solution;
+use list_node::ListNode;
 
 fn main() {
-    let mut list1: LinkedList<u32> = LinkedList::new();
-    let mut list2: LinkedList<u32> = LinkedList::new();
+    let arr1 = [9, 4, 5];
+    let arr2 = [3, 4, 5, 5];
 
-    list1.push_back(9);
-    list1.push_back(4);
-    list1.push_back(5);
+    let arr1_last_index = arr1.len() - 1;
+    let arr2_last_index = arr2.len() - 1;
 
-    list2.push_back(3);
-    list2.push_back(4);
-    list2.push_back(5);
-    list2.push_back(5);
+    let mut list1 = Some(Box::new(ListNode::new(arr1[arr1_last_index])));
+    let mut list2 = Some(Box::new(ListNode::new(arr2[arr2_last_index])));
 
-    let results = Solution.add_two_numbers(list1, list2);
+    for i in (0..arr1_last_index).rev() {
+        let mut ln = ListNode::new(arr1[i]);
+        ln.next = list1;
+        list1 = Some(Box::new(ln));
+    }
+    for i in (0..arr2_last_index).rev() {
+        let mut ln = ListNode::new(arr2[i]);
+        ln.next = list2;
+        list2 = Some(Box::new(ln));
+    }
+
+    let results = Solution::add_two_numbers(list1, list2);
     println!("{:?}", results);
 }
