@@ -18,3 +18,4 @@ leetcode in rust lang.
 |3|[Longest Substring Without Repeating Characters](./Algorithms/0003.longest_substring_without_repeating_characters)|25%|Medium||
 |4|[Median of Two Sorted Arrays](./Algorithms/0004.median_of_two_sorted_arrays)|24%|Hard||
 |13|[Roman to Integer](./Algorithms/0013.roman_to_integer)|24%|Easy||
+|70|[Climbing Stairs](./Algorithms/0070.climbing_stairs)|24%|Easy||
