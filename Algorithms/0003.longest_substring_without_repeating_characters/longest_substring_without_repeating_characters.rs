@@ -1,7 +1,7 @@
 use std::cmp::max;
 
-pub fn longest_substring_without_repeating_characters (s: String) -> usize {
-
+impl Solution {
+    pub fn length_of_longest_substring(s: String) -> i32 {
     let mut start = 0;
     let mut end = 0;
 
@@ -34,8 +34,11 @@ pub fn longest_substring_without_repeating_characters (s: String) -> usize {
         result = max(result, end - start);
     }
 
-    return result;
+    return result as i32;
+    }
 }
+
+
 
 fn main() {
     let s = String::from("Hello world");

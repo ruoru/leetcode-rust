@@ -1,32 +1,49 @@
-package problem0088
+pub struct Solution {}
 
-// 本题的要求是，把nums1的前m项和nums2的前n项合并，放入nums1中。
-func merge(nums1 []int, m int, nums2 []int, n int) {
-	// 深度复制 nums1
-	temp := make([]int, m)
-	copy(temp, nums1)
+impl Solution {
+    pub fn merge(nums1: &mut Vec<i32>, m: i32, nums2: &mut Vec<i32>, n: i32) {
+        let mut v = vec![];
+        let mut i: usize = 0;
+        let mut j: usize = 0;
+        let _m: usize = if m as usize > nums1.len() {
+            nums1.len()
+        } else {
+            m as usize
+        };
+        let _n: usize = if n as usize > nums2.len() {
+            nums2.len()
+        } else {
+            n as usize
+        };
 
-	j, k := 0, 0
-	for i := 0; i < len(nums1); i++ {
-		// nums2用完了
-		if k >= n {
-			nums1[i] = temp[j]
-			j++
-			continue
-		}
-		// temp 用完了
-		if j >= m {
-			nums1[i] = nums2[k]
-			k++
-			continue
-		}
-		// 比较后，放入
-		if temp[j] < nums2[k] {
-			nums1[i] = temp[j]
-			j++
-		} else {
-			nums1[i] = nums2[k]
-			k++
-		}
-	}
+        while i < _m || j < _n {
+            if i == _m && j < _n {
+                v.push(nums2[j]);
+                j += 1;
+                continue;
+            } else if i < _m && j == _n {
+                v.push(nums1[i]);
+                i += 1;
+                continue;
+            }
+
+            let v1 = nums1[i];
+            let v2 = nums2[j];
+
+            if v1 < v2 {
+                i += 1;
+                v.push(v1);
+            } else if v1 > v2 {
+                j += 1;
+                v.push(v2);
+            } else {
+                i += 1;
+                j += 1;
+                v.push(v1);
+                v.push(v2);
+            }
+        }
+
+        *nums1 = v;
+    }
 }
