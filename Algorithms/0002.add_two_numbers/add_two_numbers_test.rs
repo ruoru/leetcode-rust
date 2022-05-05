@@ -1,11 +1,10 @@
 mod add_two_numbers;
-mod list_node;
 use add_two_numbers::Solution;
-use list_node::ListNode;
+use add_two_numbers::ListNode;
 
 fn main() {
     let arr1 = [9, 4, 5];
-    let arr2 = [3, 4, 5, 5];
+    let arr2 = [3, 4, 5];
 
     let arr1_last_index = arr1.len() - 1;
     let arr2_last_index = arr2.len() - 1;
