@@ -1,40 +1,23 @@
-package problem0006
+impl Solution {
+    pub fn convert(s: String, num_rows: i32) -> String {
+        let num_rows = num_rows as usize;
+        if num_rows <= 1 || s.len() <= num_rows {
+            return s;
+        }
 
-import (
-	"bytes"
-)
+        let mut rows: Vec<String> = vec![String::new(); num_rows];
+        let mut row_index = 0;
+        let mut direction = 1;
 
-func convert(s string, numRows int) string {
-	if numRows == 1 || len(s) <= numRows {
-		return s
-	}
+        for c in s.chars() {
+            rows[row_index].push(c);
+            row_index = (row_index as i32 + direction) as usize;
 
-	res := bytes.Buffer{}
-	// p pace 步距
-	p := numRows*2 - 2
+            if row_index == 0 || row_index == num_rows - 1 {
+                direction *= -1;
+            }
+        }
 
-	// 处理第一行
-	for i := 0; i < len(s); i += p {
-		res.WriteByte(s[i])
-	}
-
-	// 处理中间的行
-	for r := 1; r <= numRows-2; r++ {
-		// 添加r行的第一个字符
-		res.WriteByte(s[r])
-
-		for k := p; k-r < len(s); k += p {
-			res.WriteByte(s[k-r])
-			if k+r < len(s) {
-				res.WriteByte(s[k+r])
-			}
-		}
-	}
-
-	// 处理最后一行
-	for i := numRows - 1; i < len(s); i += p {
-		res.WriteByte(s[i])
-	}
-
-	return res.String()
+        rows.concat()
+    }
 }

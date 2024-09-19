@@ -1,64 +1,21 @@
-package problem0007
+struct Solution;
 
-import (
-	"testing"
+impl Solution {
+    pub fn reverse(x: i32) -> i32 {
+        let mut x = x;
+        let mut rev = 0;
 
-	"github.com/stretchr/testify/assert"
-)
-
-type para struct {
-	one int
+        while x != 0 {
+            let pop = x % 10;
+            x /= 10;
+            rev = rev * 10 + pop;
+        }
+        rev
+    }
 }
 
-type ans struct {
-	one int
-}
-
-type question struct {
-	p para
-	a ans
-}
-
-func Test_OK(t *testing.T) {
-	ast := assert.New(t)
-
-	qs := []question{
-		question{
-			p: para{
-				one: 123,
-			},
-			a: ans{
-				one: 321,
-			},
-		},
-		question{
-			p: para{
-				one: -123,
-			},
-			a: ans{
-				one: -321,
-			},
-		},
-		question{
-			p: para{
-				one: 1234567899,
-			},
-			a: ans{
-				one: 0,
-			},
-		},
-		question{
-			p: para{
-				one: -1234567899,
-			},
-			a: ans{
-				one: 0,
-			},
-		},
-	}
-
-	for _, q := range qs {
-		a, p := q.a, q.p
-		ast.Equal(a.one, reverse(p.one), "输入:%v", p)
-	}
+fn main() {
+    let x = 123;
+    let result = Solution::reverse(x);
+    println!("{}", result);
 }

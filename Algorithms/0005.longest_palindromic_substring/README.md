@@ -17,17 +17,18 @@ Output: "bb"
 ## 解题思路
 题目要求寻找字符串中的最长回文。
 当然，我们可以使用下面的程序判断字符串s[i:j+1]是否是回文。
-```go
-func isPalindromic(s *string, i, j int ) bool {
-    for  i< j {
-        if (*s)[i] != (*s)[j] {
-            return false
-        } 
-        i++
-        j--
+```rust
+let expand_around_center = |left: i32, right: i32| -> (usize, usize) {
+    let mut l = left;
+    let mut r = right;
+
+    while l >= 0 && r < n as i32 && s_chars[l as usize] == s_chars[r as usize] {
+        l -= 1;
+        r += 1;
     }
-    return true
-}
+
+    ((l + 1) as usize, (r - l - 1) as usize)
+};
 ```
 但是，这样就没有利用回文的一下特点，假定回文的长度为l，x为任意字符
 1. 当l为奇数时，回文的`正中间段`只会是，“x”，或“xxx”，或“xxxxx”，或...

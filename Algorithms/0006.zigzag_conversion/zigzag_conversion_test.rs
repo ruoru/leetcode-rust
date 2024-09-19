@@ -1,87 +1,32 @@
-package problem0006
+struct Solution;
 
-import (
-	"testing"
+impl Solution {
+    pub fn convert(s: String, num_rows: i32) -> String {
+        let num_rows = num_rows as usize;
+        if num_rows <= 1 || s.len() <= num_rows {
+            return s;
+        }
 
-	"github.com/stretchr/testify/assert"
-)
+        let mut rows: Vec<String> = vec![String::new(); num_rows];
+        let mut row_index = 0;
+        let mut direction = 1;
 
-type para struct {
-	one string
-	two int
+        for c in s.chars() {
+            rows[row_index].push(c);
+            row_index = (row_index as i32 + direction) as usize;
+
+            if row_index == 0 || row_index == num_rows - 1 {
+                direction *= -1;
+            }
+        }
+
+        rows.concat()
+    }
 }
 
-type ans struct {
-	one string
-}
-
-type question struct {
-	p para
-	a ans
-}
-
-func Test_OK(t *testing.T) {
-	ast := assert.New(t)
-
-	qs := []question{
-		question{
-			p: para{
-				one: "ABCDEFGHIJKLMNOPQRSTUVWXYZ",
-				two: 1,
-			},
-			a: ans{
-				one: "ABCDEFGHIJKLMNOPQRSTUVWXYZ",
-			},
-		},
-		question{
-			p: para{
-				one: "ABCDEFGHIJKLMNOPQRSTUVWXYZ",
-				two: 2,
-			},
-			a: ans{
-				one: "ACEGIKMOQSUWYBDFHJLNPRTVXZ",
-			},
-		},
-		question{
-			p: para{
-				one: "ABCDEFGHIJKLMNOPQRSTUVWXYZ",
-				two: 3,
-			},
-			a: ans{
-				one: "AEIMQUYBDFHJLNPRTVXZCGKOSW",
-			},
-		},
-		question{
-			p: para{
-				one: "ABCDEFGHIJKLMNOPQRSTUVWXYZ",
-				two: 4,
-			},
-			a: ans{
-				one: "AGMSYBFHLNRTXZCEIKOQUWDJPV",
-			},
-		},
-		question{
-			p: para{
-				one: "ABCDEFGHIJKLMNOPQRSTUVWX",
-				two: 5,
-			},
-			a: ans{
-				one: "AIQBHJPRXCGKOSWDFLNTVEMU",
-			},
-		},
-		question{
-			p: para{
-				one: "A",
-				two: 3,
-			},
-			a: ans{
-				one: "A",
-			},
-		},
-	}
-
-	for _, q := range qs {
-		a, p := q.a, q.p
-		ast.Equal(a.one, convert(p.one, p.two), "输入:%v", p)
-	}
+fn main() {
+    let s = "PAYPALISHIRING".to_string();
+    let num_rows = 4;
+    let result = Solution::convert(s, num_rows);
+    println!("{}", result);
 }
